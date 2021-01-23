@@ -66,17 +66,167 @@ void MyRaygenShader()
     }
 }
 
+
+float draw_triangle5(in MyAttributes attr, in float3 range, in float increment) {
+
+    float blue = 0.0;
+
+    // Get the color of the center triangle.
+    if (attr.barycentrics.x < range.x &&
+        attr.barycentrics.y < range.y &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < range.z)
+        blue += 1.0;
+
+    const float offset1 = 0.5;
+    const float offset2 = 1.5;
+
+    // Get the color of the top triangle.
+    //blue += draw_triangle6(attr, float3(range.x - increment, range.y - increment, range.z + increment), increment / 2);
+    // Get the color of the left triangle.
+    //blue += draw_triangle6(attr, float3(range.x + increment, range.y - increment, range.z - increment), increment / 2);
+    // Get the color of the right triangle.
+    //blue += draw_triangle6(attr, float3(range.x - increment, range.y + increment, range.z - increment), increment / 2);
+
+    return blue;
+}
+
+
+
+float draw_triangle4(in MyAttributes attr, in float3 range, in float increment) {
+
+    float blue = 0.0;
+
+    // Get the color of the center triangle.
+    if (attr.barycentrics.x < range.x &&
+        attr.barycentrics.y < range.y &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < range.z)
+        blue += 1.0;
+
+    const float offset1 = 0.5;
+    const float offset2 = 1.5;
+
+    // Get the color of the top triangle.
+    blue += draw_triangle5(attr, float3(range.x - increment, range.y - increment, range.z + increment), increment / 2);
+    // Get the color of the left triangle.
+    blue += draw_triangle5(attr, float3(range.x + increment, range.y - increment, range.z - increment), increment / 2);
+    // Get the color of the right triangle.
+    blue += draw_triangle5(attr, float3(range.x - increment, range.y + increment, range.z - increment), increment / 2);
+
+    return blue;
+}
+
+
+float draw_triangle3(in MyAttributes attr, in float3 range, in float increment) {
+
+    float blue = 0.0;
+
+    // Get the color of the center triangle.
+    if (attr.barycentrics.x < range.x &&
+        attr.barycentrics.y < range.y &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < range.z)
+        blue += 1.0;
+
+    const float offset1 = 0.5;
+    const float offset2 = 1.5;
+
+    // Get the color of the top triangle.
+    blue += draw_triangle4(attr, float3(range.x - increment, range.y - increment, range.z + increment), increment / 2);
+    // Get the color of the left triangle.
+    blue += draw_triangle4(attr, float3(range.x + increment, range.y - increment, range.z - increment), increment / 2);
+    // Get the color of the right triangle.
+    blue += draw_triangle4(attr, float3(range.x - increment, range.y + increment, range.z - increment), increment / 2);
+
+    return blue;
+}
+
+
+
+
+float draw_triangle2(in MyAttributes attr, in float3 range, in float increment) {
+
+    float blue = 0.0;
+
+    // Get the color of the center triangle.
+    if (attr.barycentrics.x < range.x &&
+        attr.barycentrics.y < range.y &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < range.z)
+        blue += 1.0;
+
+    const float offset1 = 0.5;
+    const float offset2 = 1.5;
+
+    // Get the color of the top triangle.
+    blue += draw_triangle3(attr, float3(range.x - increment, range.y - increment, range.z + increment), increment / 2);
+    // Get the color of the left triangle.
+    blue += draw_triangle3(attr, float3(range.x + increment, range.y - increment, range.z - increment), increment / 2);
+    // Get the color of the right triangle.
+    blue += draw_triangle3(attr, float3(range.x - increment, range.y + increment, range.z - increment), increment / 2);
+
+    return blue;
+}
+
+
+float draw_triangle1(in MyAttributes attr, in float3 range, in float increment) {
+
+    float blue = 0.0;
+
+    // Get the color of the center triangle.
+    if (attr.barycentrics.x < range.x &&
+        attr.barycentrics.y < range.y &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < range.z)
+        blue += 1.0;
+
+    const float offset1 = 0.5;
+    const float offset2 = 1.5;
+    
+    // Get the color of the top triangle.
+    blue += draw_triangle2(attr, float3(range.x - increment, range.y - increment, range.z + increment), increment / 2);
+    // Get the color of the left triangle.
+    blue += draw_triangle2(attr, float3(range.x + increment, range.y - increment, range.z - increment), increment / 2);
+    // Get the color of the right triangle.
+    blue += draw_triangle2(attr, float3(range.x - increment, range.y + increment, range.z - increment), increment / 2);
+
+    return blue;
+}
+
 [shader("closesthit")]
 void MyClosestHitShader(inout RayPayload payload, in MyAttributes attr)
 {
-    float3 barycentrics = float3(1 - attr.barycentrics.x - attr.barycentrics.y, attr.barycentrics.x, attr.barycentrics.y);
-    payload.color = float4(barycentrics, 1);
+    //float3 barycentrics = float3(1 - attr.barycentrics.x - attr.barycentrics.y, attr.barycentrics.x, attr.barycentrics.y);
+    float red = 0.0;
+    float green = 0.0;
+    float blue = 0.0;
+
+    /*
+    if (attr.barycentrics.x > 0.5)
+        red += 0.7;
+
+    if (attr.barycentrics.y > 0.5)
+        red += 0.7;
+
+    if ((1 - attr.barycentrics.x - attr.barycentrics.y) > 0.5)
+        red += 0.7;
+    */
+
+    /*
+    if (attr.barycentrics.x < 0.5 &&
+        attr.barycentrics.y < 0.5 &&
+        (1 - attr.barycentrics.x - attr.barycentrics.y) < 0.5)
+        blue += 1.0;
+    */
+
+    blue += draw_triangle1(attr, float3(0.5, 0.5, 0.5), 0.25);     // center triangle
+    //blue += draw_triangle(attr, float3(0.25, 0.25, 0.75));  // top triangle
+    //blue += draw_triangle(attr, float3(0.75, 0.25, 0.25));  // left triangle
+    //blue += draw_triangle(attr, float3(0.25, 0.75, 0.25));  // right triangle
+
+    payload.color = float4(red, green, blue, 1);
 }
 
 [shader("miss")]
 void MyMissShader(inout RayPayload payload)
 {
-    payload.color = float4(0, 0, 0, 1);
+    payload.color = float4(0.0, 0.0, 1.0, 1.0);
 }
 
 #endif // RAYTRACING_HLSL
