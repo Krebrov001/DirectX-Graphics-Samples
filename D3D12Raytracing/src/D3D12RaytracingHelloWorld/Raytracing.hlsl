@@ -4,7 +4,18 @@
  *
  * @section DESCRIPTION
  *
- * This file
+ * This shader code draws the Sierpinski's Triangle Pattern.
+ * The ray generation shader is executed for the whole render target via DispatchRays(). If a ray index corresponding to a pixel is inside a stencil window, it casts a ray into the scene.
+ * Casted rays that hit the triangle use barycentric coordinates to determine the ray's hit position within the pattern, whether to shade it or not.
+ * Missed rays trigger the miss shader, which draws the blue background.
+ *
+ * The Sierpinski Triangle Pattern is recursive.
+ * A blue inverted triangle is drawn in the middle of the black triangle, creating three separate black triangles around the sides.
+ * These are the top triangle, left triangle, and right triangle.
+ * For each one of these triangles we once again draw a blue inverted trinagle in the middle, subdividing each one of these black triangles into three even smaler black triangles.
+ * The hit shader in my HLSL code calls a recursive function draw_triangle() providing the barycentric coordinates of the given pixel where the ray hit, the range inside which the blue triangle is drawn, and an increment value.
+ *
+ * This algorithm is my own original design.
  */
 
 #ifndef RAYTRACING_HLSL
